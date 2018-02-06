@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title><ui:insert name="title">Suscripcion</ui:insert></title>
+        <!--<h:outputStylesheet library="css" name="pfcrud.css"/>-->
+<!--        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/personalizado/skin.css"/>-->
+        <h:outputScript library="scripts" name="pfcrud.js"/>
+        
+      
+    </h:head>
+    <h:body>
+        <p:outputLabel value="#{templateController.fechaFin()}" rendered="#{templateController.estaSuscrito()}" />
+        <h:form rendered="#{!templateController.estaSuscrito()}"  >
+            <p:messages id="mensaje" autoUpdate="false" />
+           
+                   <p:fieldset legend="Suscripción">
+                    <p:panelGrid columns="2" columnClasses="column" id="pgusuario" >
+
+                        <p:outputLabel value="#{myBundle.CreateSuscripcionLabel_medioDePago}" for="medioDePago" />
+                        <p:selectOneMenu id="medioDePago" value="#{suscripcionController1.suscripcion.medioDePago}" required="true" requiredMessage="#{myBundle.CreateSuscripcionRequiredMessage_medioDePago}" maxlength="30">
+                            <f:selectItem itemLabel="Seleccione Método" itemValue="" />
+                            <f:selectItem itemLabel="Tarjeta de Crédito" itemValue="Tarjeta de Crédito" />
+                            <f:selectItem itemLabel="Paypal" itemValue="Paypal" />
+                            <p:ajax event="change" update="pgusuario" />
+                         </p:selectOneMenu>
+                        
+                        <p:outputLabel rendered="#{suscripcionController1.suscripcion.medioDePago=='Tarjeta de Crédito'}" value="Número de tarjeta"  for="tarjeta"/>
+                         <p:inputText id="tarjeta" rendered="#{suscripcionController1.suscripcion.medioDePago=='Tarjeta de Crédito'}" />
+                        
+                         <p:outputLabel rendered="#{suscripcionController1.suscripcion.medioDePago=='Tarjeta de Crédito'}" value="CVV"  for="cvv"/>
+                         <p:inputText id="cvv" rendered="#{suscripcionController1.suscripcion.medioDePago=='Tarjeta de Crédito'}" />
+                         
+                         <p:outputLabel rendered="#{suscripcionController1.suscripcion.medioDePago=='Tarjeta de Crédito'}" value="Mes de Caducidad"  for="fecha"/>
+                         <p:selectOneMenu id="fecha" rendered="#{suscripcionController1.suscripcion.medioDePago=='Tarjeta de Crédito'}">
+                            <f:selectItem itemLabel="01" itemValue="01" />
+                            <f:selectItem itemLabel="02" itemValue="02" />
+                            <f:selectItem itemLabel="03" itemValue="03" />
+                            <f:selectItem itemLabel="04" itemValue="04" />
+                            <f:selectItem itemLabel="05" itemValue="05" />
+                            <f:selectItem itemLabel="06" itemValue="06" />
+                            <f:selectItem itemLabel="07" itemValue="07" />
+                            <f:selectItem itemLabel="08" itemValue="08" />
+                            <f:selectItem itemLabel="09" itemValue="09" />
+                            <f:selectItem itemLabel="10" itemValue="10" />
+                            <f:selectItem itemLabel="11" itemValue="11" />
+                            <f:selectItem itemLabel="12" itemValue="12" />
+                         </p:selectOneMenu>
+                        <p:outputLabel rendered="#{suscripcionController1.suscripcion.medioDePago=='Tarjeta de Crédito'}" value="Año de Caducidad"  for="anho"/>
+                         
+                         <p:selectOneMenu id="anho" rendered="#{suscripcionController1.suscripcion.medioDePago=='Tarjeta de Crédito'}">
+                            <f:selectItem itemLabel="2018" itemValue="2018" />
+                            <f:selectItem itemLabel="2019" itemValue="2019" />
+                            <f:selectItem itemLabel="2020" itemValue="2020" />
+                            <f:selectItem itemLabel="2021" itemValue="2021" />
+                            <f:selectItem itemLabel="2022" itemValue="2022" />
+                            <f:selectItem itemLabel="2023" itemValue="2023" />
+                            <f:selectItem itemLabel="2024" itemValue="2024" />
+                            <f:selectItem itemLabel="2025" itemValue="2025" />
+                            <f:selectItem itemLabel="2026" itemValue="2026" />
+                            <f:selectItem itemLabel="2027" itemValue="2027" />
+                            <f:selectItem itemLabel="2028" itemValue="2028" />
+                            <f:selectItem itemLabel="2029" itemValue="2029" />
+                         </p:selectOneMenu>
+                         
+                        
+                        <p:outputLabel value="Paypal" for="Paypal"  rendered="#{suscripcionController1.suscripcion.medioDePago=='Paypal'}" />
+                        <p:button id="Paypal" href="https://www.paypal.com/signin" value="Iniciar Sesión en Paypal"  rendered="#{suscripcionController1.suscripcion.medioDePago=='Paypal'}"/>
+                        
+                        <p:outputLabel value="Plan" for="idPlan" />
+                        <p:selectOneMenu id="idPlan" value="#{suscripcionController1.suscripcion.idPlan}" required="true" requiredMessage="#{myBundle.CreateSuscripcionRequiredMessage_idPlan}" converter="planConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{planController.items}"
+                                           var="idPlanItem"
+                                           itemValue="#{idPlanItem}"
+                                           itemLabel="#{idPlanItem.duracion} Mes - Bs. #{idPlanItem.precio}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+     
+                    
+                    
+                  </p:fieldset>
+                <br/>
+                
+                <p:commandButton actionListener="#{suscripcionController1.registrar}" value="Suscribir" update="pgusuario"  action="/index" >
+                 
+                       
+                    </p:commandButton>
+                    
+                    
+
+                   
+                
+           
+
+            </h:form>
+    </h:body>
+</html>
+

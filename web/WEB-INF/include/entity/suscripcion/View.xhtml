@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SuscripcionViewDlg" widgetVar="SuscripcionViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewSuscripcionTitle}" closeOnEscape="true">
+
+            <h:form id="SuscripcionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{suscripcionController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewSuscripcionLabel_idSuscripcion}"/>
+                        <h:outputText value="#{suscripcionController.selected.idSuscripcion}" title="#{myBundle.ViewSuscripcionTitle_idSuscripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewSuscripcionLabel_medioDePago}"/>
+                        <h:outputText value="#{suscripcionController.selected.medioDePago}" title="#{myBundle.ViewSuscripcionTitle_medioDePago}"/>
+
+                        <h:outputText value="#{myBundle.ViewSuscripcionLabel_monto}"/>
+                        <h:outputText value="#{suscripcionController.selected.monto}" title="#{myBundle.ViewSuscripcionTitle_monto}"/>
+
+                        <h:outputText value="#{myBundle.ViewSuscripcionLabel_fecha}"/>
+                        <h:outputText value="#{suscripcionController.selected.fecha}" title="#{myBundle.ViewSuscripcionTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewSuscripcionLabel_idPersona}"/>
+                        <h:outputText value="#{suscripcionController.selected.idPersona.idCM}"/>
+
+                        <h:outputText value="#{myBundle.ViewSuscripcionLabel_idPlan}"/>
+                        <h:outputText value="#{suscripcionController.selected.idPlan.idPlan}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('SuscripcionViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="CommunitymanagerEditDlg" widgetVar="CommunitymanagerEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditCommunitymanagerTitle}" closeOnEscape="true">
+
+            <h:form id="CommunitymanagerEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{communitymanagerController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditCommunitymanagerLabel_idCM}" for="idCM" />
+                        <h:outputText id="idCM" value="#{communitymanagerController.selected.idCM}" />
+
+                        <p:outputLabel value="#{myBundle.EditCommunitymanagerLabel_membresia}" for="membresia" />
+                        <p:inputText id="membresia" value="#{communitymanagerController.selected.membresia}" title="#{myBundle.EditCommunitymanagerTitle_membresia}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{myBundle.EditCommunitymanagerLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{communitymanagerController.selected.usuario}" required="true" requiredMessage="#{myBundle.EditCommunitymanagerRequiredMessage_usuario}" converter="usuarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"
+                                           itemLabel="#{usuarioItem.idUsuario.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{communitymanagerController.save}" value="#{myBundle.Save}" update="display,:CommunitymanagerListForm:datalist,:CommunitymanagerListForm:CommunitymanagerDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CommunitymanagerEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CommunitymanagerEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

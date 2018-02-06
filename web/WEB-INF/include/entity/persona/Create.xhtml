@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PersonaCreateDlg" widgetVar="PersonaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePersonaTitle}" closeOnEscape="true">
+
+            <h:form id="PersonaCreateForm">
+
+                <h:panelGroup id="display" rendered="#{personaController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreatePersonaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{personaController.selected.nombre}" title="#{myBundle.CreatePersonaTitle_nombre}" required="true" requiredMessage="#{myBundle.CreatePersonaRequiredMessage_nombre}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonaLabel_correo}" for="correo" />
+                        <p:inputText id="correo" value="#{personaController.selected.correo}" title="#{myBundle.CreatePersonaTitle_correo}" required="true" requiredMessage="#{myBundle.CreatePersonaRequiredMessage_correo}" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonaLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{personaController.selected.telefono}" title="#{myBundle.CreatePersonaTitle_telefono}" required="true" requiredMessage="#{myBundle.CreatePersonaRequiredMessage_telefono}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonaLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{personaController.selected.direccion}" title="#{myBundle.CreatePersonaTitle_direccion}" required="true" requiredMessage="#{myBundle.CreatePersonaRequiredMessage_direccion}" size="100" maxlength="100"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonaLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{personaController.selected.usuario}"  converter="usuarioConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"
+                                           itemLabel="#{usuarioItem.idUsuario.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{personaController.saveNew}" value="#{myBundle.Save}" update="display,:PersonaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PersonaCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PersonaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

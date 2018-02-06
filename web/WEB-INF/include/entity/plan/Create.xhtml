@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanCreateDlg" widgetVar="PlanCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePlanTitle}" closeOnEscape="true">
+
+            <h:form id="PlanCreateForm">
+
+                <h:panelGroup id="display" rendered="#{planController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreatePlanLabel_duracion}" for="duracion" />
+                        <p:inputText id="duracion" value="#{planController.selected.duracion}" title="#{myBundle.CreatePlanTitle_duracion}" required="true" requiredMessage="#{myBundle.CreatePlanRequiredMessage_duracion}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanLabel_precio}" for="precio" />
+                        <p:inputText id="precio" value="#{planController.selected.precio}" title="#{myBundle.CreatePlanTitle_precio}" required="true" requiredMessage="#{myBundle.CreatePlanRequiredMessage_precio}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planController.saveNew}" value="#{myBundle.Save}" update="display,:PlanListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PlanCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PlanCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

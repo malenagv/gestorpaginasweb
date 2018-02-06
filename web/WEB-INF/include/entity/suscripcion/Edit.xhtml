@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SuscripcionEditDlg" widgetVar="SuscripcionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditSuscripcionTitle}" closeOnEscape="true">
+
+            <h:form id="SuscripcionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{suscripcionController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditSuscripcionLabel_idSuscripcion}" for="idSuscripcion" />
+                        <h:outputText id="idSuscripcion" value="#{suscripcionController.selected.idSuscripcion}" />
+
+                        <p:outputLabel value="#{myBundle.EditSuscripcionLabel_medioDePago}" for="medioDePago" />
+                        <p:inputText id="medioDePago" value="#{suscripcionController.selected.medioDePago}" title="#{myBundle.EditSuscripcionTitle_medioDePago}" required="true" requiredMessage="#{myBundle.EditSuscripcionRequiredMessage_medioDePago}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.EditSuscripcionLabel_monto}" for="monto" />
+                        <p:inputText id="monto" value="#{suscripcionController.selected.monto}" title="#{myBundle.EditSuscripcionTitle_monto}" required="true" requiredMessage="#{myBundle.EditSuscripcionRequiredMessage_monto}"/>
+
+                        <p:outputLabel value="#{myBundle.EditSuscripcionLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{suscripcionController.selected.fecha}" title="#{myBundle.EditSuscripcionTitle_fecha}" required="true" requiredMessage="#{myBundle.EditSuscripcionRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditSuscripcionLabel_idPersona}" for="idPersona" />
+                        <p:selectOneMenu id="idPersona" value="#{suscripcionController.selected.idPersona}" required="true" requiredMessage="#{myBundle.EditSuscripcionRequiredMessage_idPersona}" converter="communitymanagerConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{communitymanagerController.items}"
+                                           var="idPersonaItem"
+                                           itemValue="#{idPersonaItem}"
+                                           itemLabel="#{idPersonaItem.idCM.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditSuscripcionLabel_idPlan}" for="idPlan" />
+                        <p:selectOneMenu id="idPlan" value="#{suscripcionController.selected.idPlan}" required="true" requiredMessage="#{myBundle.EditSuscripcionRequiredMessage_idPlan}" converter="planConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{planController.items}"
+                                           var="idPlanItem"
+                                           itemValue="#{idPlanItem}"
+                                           itemLabel="#{idPlanItem.idPlan.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{suscripcionController.save}" value="#{myBundle.Save}" update="display,:SuscripcionListForm:datalist,:SuscripcionListForm:SuscripcionDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SuscripcionEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('SuscripcionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

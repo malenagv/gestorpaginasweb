@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PlanEditDlg" widgetVar="PlanEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPlanTitle}" closeOnEscape="true">
+
+            <h:form id="PlanEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{planController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPlanLabel_idPlan}" for="idPlan" />
+                        <h:outputText id="idPlan" value="#{planController.selected.idPlan}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanLabel_duracion}" for="duracion" />
+                        <p:inputText id="duracion" value="#{planController.selected.duracion}" title="#{myBundle.EditPlanTitle_duracion}" required="true" requiredMessage="#{myBundle.EditPlanRequiredMessage_duracion}" size="20" maxlength="20"/>
+
+                        <p:outputLabel value="#{myBundle.EditPlanLabel_precio}" for="precio" />
+                        <p:inputText id="precio" value="#{planController.selected.precio}" title="#{myBundle.EditPlanTitle_precio}" required="true" requiredMessage="#{myBundle.EditPlanRequiredMessage_precio}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planController.save}" value="#{myBundle.Save}" update="display,:PlanListForm:datalist,:PlanListForm:PlanDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PlanEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PlanEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

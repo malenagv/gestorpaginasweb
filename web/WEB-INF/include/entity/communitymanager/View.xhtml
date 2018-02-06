@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CommunitymanagerViewDlg" widgetVar="CommunitymanagerViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewCommunitymanagerTitle}" closeOnEscape="true">
+
+            <h:form id="CommunitymanagerViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{communitymanagerController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewCommunitymanagerLabel_idCM}"/>
+                        <h:outputText value="#{communitymanagerController.selected.idCM}" title="#{myBundle.ViewCommunitymanagerTitle_idCM}"/>
+
+                        <h:outputText value="#{myBundle.ViewCommunitymanagerLabel_membresia}"/>
+                        <h:outputText value="#{communitymanagerController.selected.membresia}" title="#{myBundle.ViewCommunitymanagerTitle_membresia}"/>
+
+                        <h:outputText value="#{myBundle.ViewCommunitymanagerLabel_usuario}"/>
+                        <h:outputText value="#{communitymanagerController.selected.usuario.idUsuario}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('CommunitymanagerViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
